@@ -1,14 +1,8 @@
 # JSON GPT
 
-Generate correct JSON fast and cheap using OpenAI's streaming API.
-
-A library designed to leverage the power of GPT models for generating correct JSON structures efficiently. This tool harnesses the OpenAI's streaming API and directly feeds the output to a robust CFG parser built with Lark, ensuring high performance and accuracy.
-
-## Features
-
-- json-gpt is built using Lark, so you can modify the grammar to any CFG, such as Python code.
-- json-gpt uses streaming, so you don't have to completely restart your generation upon an error, like some retry-based libraries.
-- json-gpt uses an adaptive rollback, which prevents some weird errors in other constrained generation frameworks based on token maksing.
+A fast and cheap JSON generation library for GPT models.
+Json-gpt uses OpenAI's streaming API and passes tokens directly into a [Lark parser](https://github.com/lark-parser/lark) which catches errors as soon as they appear, so they can be corrected.
+Lark grammars are also available for other output formats, such as python code.
 
 ## Demo
 
@@ -16,6 +10,11 @@ Let's see json-gpt in action, struggling with a dodgy json schema:
 
 https://github.com/thomasahle/json-gpt/assets/946355/2eb56138-b48e-4d8d-8441-c4dfae0625c7
 
+## Features
+
+- json-gpt is built using Lark, so you can modify the grammar to any CFG, such as Python code.
+- json-gpt uses streaming, so you don't have to completely restart your generation upon an error, like some retry-based libraries.
+- json-gpt uses an adaptive rollback, which prevents some weird errors in other constrained generation frameworks based on token maksing.
 
 ## Installation
 
@@ -90,3 +89,7 @@ You can configure the following parameters:
 - `temperature`: Controls randomness in generation, lower is more deterministic.
 - `verbose`: Enable verbose mode to get more information during generation.
 
+## Acknowledgements
+
+- [Outlines](https://github.com/outlines-dev/outlines): A much more general constrained generation library.
+- [Lark](https://github.com/lark-parser/lark): A simple parser library in python.
