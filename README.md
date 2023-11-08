@@ -1,23 +1,23 @@
 # JSON GPT
 
-Welcome to JSON GPT – a library designed to leverage the power of GPT models for generating correct JSON structures efficiently. This tool harnesses the OpenAI's streaming API and directly feeds the output to a robust CFG parser built with Lark, ensuring high performance and accuracy.
+Generate correct JSON fast and cheap using OpenAI's streaming API.
+
+A library designed to leverage the power of GPT models for generating correct JSON structures efficiently. This tool harnesses the OpenAI's streaming API and directly feeds the output to a robust CFG parser built with Lark, ensuring high performance and accuracy.
 
 ## Features
 
-- **GPT-based JSON Generation**: Utilize GPT models to generate JSON code that adheres to specified grammar.
-- **Streaming API Integration**: Take advantage of OpenAI's streaming API for efficient and faster JSON generation.
-- **Lark Parser Validation**: Incorporate Lark's parsing capabilities to validate and correct JSON output in real-time.
-- **Demo Mode**: Optionally introduce errors for demonstration purposes, showcasing the error correction capability.
-- **Customization**: Adjust parsing and generation settings such as maximum token length, temperature, and verbosity.
+- json-gpt is built using Lark, so you can modify the grammar to any CFG, such as Python code.
+- json-gpt uses streaming, so you don't have to completely restart your generation upon an error, like some retry-based libraries.
+- json-gpt uses an adaptive rollback, which prevents some weird errors in other constrained generation frameworks based on token maksing.
 
 ## Installation
 
-To install JSON GPT, you will need Python 3.6 or higher. Clone this repository and install the required dependencies:
+To install json-gpt, you will need Python 3.6 or higher. Clone this repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/your-username/JSON-GPT.git
-cd JSON-GPT
-pip install -r requirements.txt
+git clone https://github.com/thomasahle/json-gpt.git
+cd json-gpt
+pip install lark openai
 ```
 
 ## Usage
@@ -41,12 +41,37 @@ openai.api_key = os.getenv("OPENAI_KEY")
 prompt = """
 Title: "The Great Gatsby"
 Author: F. Scott Fitzgerald
-...
-"""
+Publication Year: 1925
+Tags: fiction, classic
 
-# Generate JSON content
-output = generate_content(prompt)
-print(output)
+Title: "Murder on the Orient Express"
+Author: Agatha Christie
+Publication Year: 1934
+Tags: fiction, mystery
+
+Title: "A Brief History of Time"
+Author: Stephen Hawking
+Publication Year: 1988
+Tags: non-fiction, science
+
+Let's write this list of books using the following JSON schema:
+
+{
+  books: [
+    {
+      title: string,
+      author: string,
+      publicationYear: integer,
+      tags: [string],
+    }
+  ]
+}
+
+json ="""
+
+print(prompt, end="")
+output = generate_content(prompt, demo_mode=True, verbose=True)
+print("\nFinal output: json =", output)
 ```
 
 ## Configuration
@@ -58,17 +83,3 @@ You can configure the following parameters:
 - `temperature`: Controls randomness in generation, lower is more deterministic.
 - `verbose`: Enable verbose mode to get more information during generation.
 
-## Contributions
-
-Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on our code of conduct, and the process for submitting pull requests to us.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-
-- OpenAI for providing the GPT models and API.
-- Lark parser, which powers the backbone of JSON validation.
-
-Happy Coding!

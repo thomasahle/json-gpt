@@ -47,7 +47,8 @@ def generate_content(
     temperature=0.7,
     # GPT models are pretty good at outputting valid json, so for demo purposes
     # we can add some errors manually to the output.
-    demo_mode = False
+    demo_mode = False,
+    verbose = True,
 ):
     """
     Generate content from the model and validate each chunk using a CFG parser.
@@ -97,7 +98,8 @@ def generate_content(
             if not event_text:
                 return current_text
 
-            print(event_text, end="", flush=True)
+            if verbose:
+                print(event_text, end="", flush=True)
 
             buffer += event_text
             consumed_length = 0
@@ -112,9 +114,10 @@ def generate_content(
                 current_text = current_text[:keep]
                 # Increase the trim amount of next time. This prevents us from getting stuck in a loop.
                 trim_amount += 1
-                print(
-                    f"\n\nError: {e}\nTrimming away {removed} chars. Now ...{repr(current_text[-10:])}\n"
-                )
+                if verbose:
+                    print(
+                        f"\n\nError: {e}\nTrimming away {removed} chars. Now ...{repr(current_text[-10:])}\n"
+                    )
                 # Break out of the loop to restart the Completion with current content
                 break
             except UnexpectedCharacters as e:
@@ -163,14 +166,11 @@ def main():
       ]
     }
 
-    json =
-    """.strip()
+    json ="""
 
-    print(prompt)
-
-    output = generate_content(prompt, demo_mode=True)
-    print("\n")
-    print("Final output:", output)
+    print(prompt, end="")
+    output = generate_content(prompt, demo_mode=True, verbose=True)
+    print("\nFinal output: json =", output)
 
 
 if __name__ == "__main__":
