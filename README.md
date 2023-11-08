@@ -10,6 +10,13 @@ A library designed to leverage the power of GPT models for generating correct JS
 - json-gpt uses streaming, so you don't have to completely restart your generation upon an error, like some retry-based libraries.
 - json-gpt uses an adaptive rollback, which prevents some weird errors in other constrained generation frameworks based on token maksing.
 
+## Demo
+
+Let's see json-gpt in action, struggling with a dodgy json schema:
+
+https://github.com/thomasahle/json-gpt/assets/946355/2eb56138-b48e-4d8d-8441-c4dfae0625c7
+
+
 ## Installation
 
 To install json-gpt, you will need Python 3.6 or higher. Clone this repository and install the required dependencies:
